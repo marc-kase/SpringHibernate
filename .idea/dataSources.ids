@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - stuff@localhost" uuid="4d2a734a-5287-4e26-879c-436f04ed89f5">
+    <database-info product="MySQL" version="5.5.23" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.31 ( Revision: alexander.soklakov@oracle.com-20140520065950-groqzzbvxprqdmnz )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="stuff"/>
+    <table name="answers" schema="" catalog="stuff" type="TABLE">
+      <column name="answer_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="information" sqlType="VARCHAR" precision="128" scale="0" nullable="true" jdbcType="12"/>
+      <column name="question_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="answer_id"/>
+      <foreign-key name="fk_question" columns="question_id" ref-table="questions" ref-schema="" ref-catalog="stuff" ref-columns="question_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_user_ans" columns="user_id" ref-table="users" ref-schema="" ref-catalog="stuff" ref-columns="user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_question" unique="false" columns="question_id"/>
+      <index name="fk_user_ans" unique="false" columns="user_id"/>
+    </table>
+    <table name="category" schema="" catalog="stuff" type="TABLE">
+      <column name="category_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="category_id"/>
+      <exported-key name="fk_category" table="questions" schema="" catalog="stuff" columns="category_id"/>
+    </table>
+    <table name="credentials" schema="" catalog="stuff" type="TABLE">
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pass" sqlType="VARCHAR" precision="2048" scale="0" nullable="true" jdbcType="12"/>
+      <foreign-key name="fk_user" columns="user_id" ref-table="users" ref-schema="" ref-catalog="stuff" ref-columns="user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_user" unique="false" columns="user_id"/>
+    </table>
+    <table name="questions" schema="" catalog="stuff" type="TABLE">
+      <column name="question_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="description" sqlType="VARCHAR" precision="512" scale="0" nullable="false" jdbcType="12"/>
+      <column name="category_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="question_id"/>
+      <foreign-key name="fk_category" columns="category_id" ref-table="category" ref-schema="" ref-catalog="stuff" ref-columns="category_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_user_quest" columns="user_id" ref-table="users" ref-schema="" ref-catalog="stuff" ref-columns="user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_question" table="answers" schema="" catalog="stuff" columns="question_id"/>
+      <index name="fk_category" unique="false" columns="category_id"/>
+      <index name="fk_user_quest" unique="false" columns="user_id"/>
+    </table>
+    <table name="roles" schema="" catalog="stuff" type="TABLE">
+      <column name="role_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="role" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="role_id"/>
+      <exported-key name="fk_role" table="users" schema="" catalog="stuff" columns="role_id"/>
+      <index name="unique_role_id" unique="true" columns="role_id"/>
+    </table>
+    <table name="users" schema="" catalog="stuff" type="TABLE">
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="128" scale="0" nullable="true" jdbcType="12"/>
+      <column name="pic" sqlType="LONGBLOB" precision="2147483647" scale="0" nullable="true" jdbcType="-4"/>
+      <column name="email" sqlType="VARCHAR" precision="128" scale="0" nullable="true" jdbcType="12"/>
+      <column name="role_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="user_id"/>
+      <foreign-key name="fk_role" columns="role_id" ref-table="roles" ref-schema="" ref-catalog="stuff" ref-columns="role_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_user_ans" table="answers" schema="" catalog="stuff" columns="user_id"/>
+      <exported-key name="fk_user" table="credentials" schema="" catalog="stuff" columns="user_id"/>
+      <exported-key name="fk_user_quest" table="questions" schema="" catalog="stuff" columns="user_id"/>
+      <index name="unique_user_id" unique="true" columns="user_id"/>
+      <index name="fk_role" unique="false" columns="role_id"/>
+    </table>
+  </data-source>
+</component>

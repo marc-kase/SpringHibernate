@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.springapp.mvc.domain">
+    <class name="Question" table="QUESTIONS">
+        <id name="questionId" column="QUESTION_ID">
+            <generator class="native"/>
+        </id>
+        <property name="description" column="DESCRIPTION" />
+        <property name="date" column="DATE" />
+
+        <many-to-one name="category" class="Category"
+                     column="CATEGORY_ID" not-null="true"/>
+
+        <set name="answers" inverse="true" cascade="all">
+            <key column="QUESTION_ID" not-null="true" />
+            <one-to-many class="Answer"/>
+        </set>
+
+        <many-to-one name="user" class="User"
+                     column="USER_ID" not-null="true"/>
+    </class>
+</hibernate-mapping>
