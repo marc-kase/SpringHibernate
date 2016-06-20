@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,8 +17,10 @@
 <body>
 <div class="container">
 
+    <sec:authorize var="loggedIn" access="isAuthenticated()"/>
     <c:import url="mini-head.jsp">
         <c:param name="title" value="${heading}"/>
+        <c:param name="loggedin" value="${loggedIn}"/>
     </c:import>
 
     <h3>create a question</h3>
@@ -27,7 +30,7 @@
         <table class="table">
             <tbody>
             <tr>
-                <td><label>Category:</label></td>
+                <td><label>category:</label></td>
                 <td>
                     <select id="ctg-select">
                         <c:forEach items="${catgs}" var="ctg">
@@ -38,17 +41,17 @@
             </tr>
             <tr>
                 <td><label>title:</label></td>
-                <td><textarea cols="100" rows="1" id="title"></textarea></td>
+                <td><textarea style="resize: none" cols="100" rows="1" id="title"></textarea></td>
             </tr>
             <tr>
                 <td><label>what it's all about:</label></td>
-                <td><textarea cols="100" rows="10" id="text"></textarea></td>
+                <td><textarea style="resize: none" cols="100" rows="10" id="text"></textarea></td>
             </tr>
             </tbody>
         </table>
 
         <div>
-            <button type="button" class="btn pull-right" onclick="submit()">Post your question</button>
+            <button type="button" class="pull-right" onclick="submit()">Post your question</button>
         </div>
 
         <script>
