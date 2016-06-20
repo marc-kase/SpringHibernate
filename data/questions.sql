@@ -1,1 +1,1 @@
-INSERT INTO stuff.questions (question_id, description, category_id, user_id, date) VALUES (1, 'Where''s my pants', 1, 1, '2016-06-19');
+INSERT INTO QUESTIONS (DESCRIPTION, CATEGORY_ID, USER_ID, DATE) VALUES ('WHERES MY PANTS', 1, 9, '2016-06-19');

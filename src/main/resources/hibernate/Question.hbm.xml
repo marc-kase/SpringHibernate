@@ -8,6 +8,7 @@
             <generator class="native"/>
         </id>
         <property name="description" column="DESCRIPTION" />
+        <property name="text" column="TEXT" />
         <property name="date" column="DATE" />
 
         <many-to-one name="category" class="Category"

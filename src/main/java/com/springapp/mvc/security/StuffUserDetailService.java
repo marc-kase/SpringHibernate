@@ -31,13 +31,12 @@ public class StuffUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userDAO.getUser(s);
+        User user = userDAO.get(s);
         System.out.println("User : " + user);
         if (user == null) {
             System.out.println("User not found");
             throw new UsernameNotFoundException("Username not found");
-        }
-        Credential credential = credDAO.get(user.getUserId());
+        }        Credential credential = credDAO.get(user.getUserId());
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),

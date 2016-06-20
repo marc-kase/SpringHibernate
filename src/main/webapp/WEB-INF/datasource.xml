@@ -6,24 +6,15 @@
        <bean id="dataSource"
              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
               <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-              <property name="url" value="jdbc:mysql://localhost:3306/stuff"/>
+              <property name="url" value="jdbc:mysql://localhost:3306/stuffdb"/>
               <property name="username" value="stuff"/>
-              <property name="password" value="sellnb080808!"/>
+              <property name="password" value="stuff"/>
        </bean>
 
        <bean id="sessionFactory"
              class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="dataSource" ref="dataSource"/>
               <property name="configLocation" value="classpath:hibernate/hibernate.cfg.xml"/>
-              <property name="hibernateProperties">
-                     <value>
-                            <![CDATA[
-        hibernate.show_sql=true
-        hibernate.format_sql=true
-        hibernate.cache.provider_class=org.hibernate.cache.NoCacheProvider
-        ]]>
-                     </value>
-              </property>
        </bean>
 
        <!--<tx:annotation-driven/>-->

@@ -1,5 +1,5 @@
-INSERT INTO stuff.users (user_id, username, pic, email, role_id) VALUES (1, 'Mathew', , 'mathew@email.com', 1);
-INSERT INTO stuff.users (user_id, username, pic, email, role_id) VALUES (2, 'Ann', null, 'ann@email.com', 1);
-INSERT INTO stuff.users (user_id, username, pic, email, role_id) VALUES (3, 'Bob', null, 'bob@email.com', 1);
-INSERT INTO stuff.users (user_id, username, pic, email, role_id) VALUES (4, 'Sam', null, 'sam@email.com', 1);
-INSERT INTO stuff.users (user_id, username, pic, email, role_id) VALUES (5, 'John', null, 'john@email.com', 1);
+INSERT INTO USERS (USERNAME, PIC, EMAIL, ROLE_ID) VALUES ('Mathew', NULL, 'MATHEW@EMAIL.COM', 1);
+INSERT INTO USERS (USERNAME, PIC, EMAIL, ROLE_ID) VALUES ('Ann', NULL, 'ANN@EMAIL.COM', 1);
+INSERT INTO USERS (USERNAME, PIC, EMAIL, ROLE_ID) VALUES ('Bob', NULL, 'BOB@EMAIL.COM', 1);
+INSERT INTO USERS (USERNAME, PIC, EMAIL, ROLE_ID) VALUES ('Sam', NULL, 'SAM@EMAIL.COM', 1);
+INSERT INTO USERS (USERNAME, PIC, EMAIL, ROLE_ID) VALUES ('John', NULL, 'JOHN@EMAIL.COM', 1);

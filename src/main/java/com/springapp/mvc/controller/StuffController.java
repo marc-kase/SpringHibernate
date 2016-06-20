@@ -1,9 +1,6 @@
 package com.springapp.mvc.controller;
 
-import com.springapp.mvc.dao.CredDAO;
-import com.springapp.mvc.dao.QuestionDAO;
-import com.springapp.mvc.dao.RoleDAO;
-import com.springapp.mvc.dao.UserDAO;
+import com.springapp.mvc.dao.*;
 import com.springapp.mvc.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -40,6 +37,9 @@ public class StuffController {
     @Autowired
     private QuestionDAO questionDAO;
 
+    @Autowired
+    private CategoryDAO categoryDAO;
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
@@ -55,13 +55,13 @@ public class StuffController {
     }
 
     @RequestMapping(value = "profile", method = RequestMethod.GET)
-    public String showProfile(ModelMap model, @RequestParam Long id) throws SQLException {
-        User u = userDAO.getUser(id);
+    public String showProfile(ModelMap model, @RequestParam(value = "id") Long id) throws SQLException {
+        User u = userDAO.get(id);
         model.addAttribute("user", u);
         return "profile";
     }
 
-    @RequestMapping(value = {"/", "all-users"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"all-users"}, method = RequestMethod.GET)
     public String getAllUsers(ModelMap model) throws SQLException {
         model.addAttribute("users", userDAO.getList());
         return "all-users";
@@ -94,17 +94,27 @@ public class StuffController {
         if (name.isEmpty()) return redirect;
         if (!name.equals(profile.getUsername())) return redirect;
 
-        User u = userDAO.getUser(profile.getUserid());
+        User u = userDAO.get(profile.getUserid());
         if (profile.hasUsername()) u.setUsername(profile.getUsername());
         if (profile.hasEmail()) u.setEmail(profile.getEmail());
 //        if (profile.hasPic()) u.setUsername(profile.getUsername());
         return "redirect: profile?id=" + u.getUserId();
     }
 
-    @RequestMapping(value = "all-questions", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "all-questions"}, method = RequestMethod.GET)
     public String getAllQuestions(ModelMap model) {
         List<Question> questions = questionDAO.getList();
-        return null;
+        List<Category> categories = categoryDAO.getList();
+        model.addAttribute("quests", questions);
+        model.addAttribute("catgs", categories);
+        return "all-questions";
+    }
+
+    @RequestMapping(value = "question", method = RequestMethod.GET)
+    public String getQuestion(ModelMap model, @RequestParam (value = "id") Long id) {
+        Question questions = questionDAO.get(id);
+        model.addAttribute("quest", questions);
+        return "question";
     }
 }
 

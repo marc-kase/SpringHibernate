@@ -1,3 +1,3 @@
-INSERT INTO stuff.credentials (user_id, pass) VALUES (1, '12345');
-INSERT INTO stuff.credentials (user_id, pass) VALUES (2, '12345');
-INSERT INTO stuff.credentials (user_id, pass) VALUES (5, '7659');
+INSERT INTO CREDENTIALS (USER_ID, PASS) VALUES (9, '12345');
+INSERT INTO CREDENTIALS (USER_ID, PASS) VALUES (9, '12345');
+INSERT INTO CREDENTIALS (USER_ID, PASS) VALUES (10, '7659');

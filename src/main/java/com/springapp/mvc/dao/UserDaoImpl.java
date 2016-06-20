@@ -38,12 +38,12 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public User getUser(Long id) {
+    public User get(Long id) {
         return (User) sessionFactory.openSession().get(User.class, id);
     }
 
     @Override
-    public User getUser(String username) {
+    public User get(String username) {
         String hql = "FROM com.springapp.mvc.domain.User u WHERE u.username = :name";
         Query query = sessionFactory.openSession().createQuery(hql);
         query.setString("name", username);

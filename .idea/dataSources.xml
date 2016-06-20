@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="4211186278">
+  <component name="DataSourceManagerImpl" format="xml" hash="1319963840">
     <data-source source="LOCAL" name="MySQL - stuff@localhost" uuid="4d2a734a-5287-4e26-879c-436f04ed89f5">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -13,7 +13,26 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="HSQLDB (Local) - hsqldb" uuid="6c2db691-bd57-403a-8704-6575485e734d">
+      <driver-ref>hsqldb.local</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:file:$USER_HOME$/API/hsqldb-2.3.4/hsqldb/hsql</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="MySQL - stuffdb@localhost" uuid="73367c0e-ffd5-438b-8244-a3ce70cbd10e">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/stuffdb</jdbc-url>
+      <driver-properties>
+        <property name="autoReconnect" value="true" />
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+        <property name="characterEncoding" value="utf8" />
+        <property name="characterSetResults" value="utf8" />
+        <property name="yearIsDateType" value="false" />
+      </driver-properties>
     </data-source>
   </component>
 </project>

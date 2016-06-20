@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface QuestionDAO {
     List<Question> getList();
+    Question get(Long id);
 }

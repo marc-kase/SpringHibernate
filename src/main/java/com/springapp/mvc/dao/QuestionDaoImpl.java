@@ -27,4 +27,9 @@ public class QuestionDaoImpl implements QuestionDAO {
 
         return list;
     }
+
+    @Override
+    public Question get(Long id) {
+        return (Question) sessionFactory.openSession().get(Question.class, id);
+    }
 }

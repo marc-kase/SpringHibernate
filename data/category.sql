@@ -1,1 +1,1 @@
-INSERT INTO stuff.category (category_id, name) VALUES (1, 'Cloths');
+INSERT INTO CATEGORY (CATEGORY_ID, NAME) VALUES (1, 'CLOTHS');

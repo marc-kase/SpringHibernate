@@ -9,6 +9,7 @@ import java.util.Set;
 public class Question {
     private Long questionId;
     private String description;
+    private String text;
     private Category category;
     private Set<Answer> answers;
     private User user;
@@ -28,6 +29,14 @@ public class Question {
 
     public void setDescription(String name) {
         this.description = name;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Category getCategory() {
