@@ -7,6 +7,10 @@
     <title></title>
 </head>
 <body>
+<c:import url="mini-head.jsp">
+    <c:param name="title" value="${heading}"/>
+</c:import>
+
 <form action="add-user-form" method="get">
     <input type="submit" value="Add New"/>
 </form>

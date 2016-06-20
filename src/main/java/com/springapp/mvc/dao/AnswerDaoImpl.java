@@ -2,6 +2,7 @@ package com.springapp.mvc.dao;
 
 import com.springapp.mvc.domain.Answer;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,5 +25,15 @@ public class AnswerDaoImpl implements AnswerDAO {
         List<Answer> list = sessionFactory.openSession().createCriteria(Answer.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return list;
+    }
+
+    @Override
+    @Transactional
+    public void add(Answer answer) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(answer);
+        session.getTransaction().commit();
+        session.close();
     }
 }

@@ -25,6 +25,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class StuffController {
+    public static final String REDIRECT_LOGIN = "redirect: login";
+    public static final String HEADING = "where's my stuff???";
+    public static final String NOT_ENOUGH_RIGHTS = "Not enough rights";
+
     @Autowired
     private UserDAO userDAO;
 
@@ -40,6 +44,9 @@ public class StuffController {
     @Autowired
     private CategoryDAO categoryDAO;
 
+    @Autowired
+    private AnswerDAO answerDAO;
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
@@ -51,19 +58,21 @@ public class StuffController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "profile", method = RequestMethod.GET)
     public String showProfile(ModelMap model, @RequestParam(value = "id") Long id) throws SQLException {
         User u = userDAO.get(id);
         model.addAttribute("user", u);
+        model.addAttribute("heading", HEADING);
         return "profile";
     }
 
     @RequestMapping(value = {"all-users"}, method = RequestMethod.GET)
     public String getAllUsers(ModelMap model) throws SQLException {
         model.addAttribute("users", userDAO.getList());
+        model.addAttribute("heading", HEADING);
         return "all-users";
     }
 
@@ -74,6 +83,7 @@ public class StuffController {
 
     @RequestMapping(value = "add-user", method = RequestMethod.POST)
     public String addUser(@RequestBody Profile profile) throws SQLException, IOException {
+
         Role role = roleDAO.getRole(profile.getRole());
         User u = new User(profile.getUsername(), profile.getEmail(), role);
         userDAO.add(u);
@@ -89,7 +99,7 @@ public class StuffController {
 
         String redirect;
         if (profile.hasUserid()) redirect = "redirect: profile?id=" + profile.getUserid();
-        else redirect = "redirect: profile?id=-1";
+        else redirect = REDIRECT_LOGIN;
 
         if (name.isEmpty()) return redirect;
         if (!name.equals(profile.getUsername())) return redirect;
@@ -97,7 +107,6 @@ public class StuffController {
         User u = userDAO.get(profile.getUserid());
         if (profile.hasUsername()) u.setUsername(profile.getUsername());
         if (profile.hasEmail()) u.setEmail(profile.getEmail());
-//        if (profile.hasPic()) u.setUsername(profile.getUsername());
         return "redirect: profile?id=" + u.getUserId();
     }
 
@@ -107,6 +116,7 @@ public class StuffController {
         List<Category> categories = categoryDAO.getList();
         model.addAttribute("quests", questions);
         model.addAttribute("catgs", categories);
+        model.addAttribute("heading", HEADING);
         return "all-questions";
     }
 
@@ -114,7 +124,52 @@ public class StuffController {
     public String getQuestion(ModelMap model, @RequestParam (value = "id") Long id) {
         Question questions = questionDAO.get(id);
         model.addAttribute("quest", questions);
+        model.addAttribute("heading", HEADING);
         return "question";
+    }
+
+    @RequestMapping(value = "add-question-form", method = RequestMethod.GET)
+    public String addQuestionForm(ModelMap model) {
+        List<Category> catgs = categoryDAO.getList();
+        model.addAttribute("catgs", catgs);
+        model.addAttribute("heading", HEADING);
+        return "add-question";
+    }
+
+    @RequestMapping(value = "add-question", method = RequestMethod.POST)
+    public Response addQuestion(@RequestBody QuestionTeplate questionTemp) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String u = auth.getName();
+        if (u.isEmpty()) return new Response(Response.Status.ERROR, NOT_ENOUGH_RIGHTS);
+
+        User user = userDAO.get(u);
+        if (u.isEmpty()) return new Response(Response.Status.ERROR, NOT_ENOUGH_RIGHTS);
+
+        Category catg = categoryDAO.get(questionTemp.getCategoryId());
+        Question question = new Question(questionTemp.getDescription(),
+                questionTemp.getText(),
+                catg, user,
+                new java.sql.Date(new java.util.Date().getTime()));
+        questionDAO.add(question);
+        return new Response(Response.Status.OK, "Succeed");
+    }
+
+    @RequestMapping(value = "add-answer", method = RequestMethod.POST)
+    public Response addAnswer(@RequestBody AnswerTemplate answerTemp) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String u = auth.getName();
+        if (u.isEmpty()) new Response(Response.Status.ERROR, NOT_ENOUGH_RIGHTS);
+
+        User user = userDAO.get(u);
+        if (u.isEmpty()) new Response(Response.Status.ERROR, NOT_ENOUGH_RIGHTS);
+
+        Question quest = questionDAO.get(answerTemp.getQuestionId());
+        Answer question = new Answer(answerTemp.getInformation(),
+                new java.sql.Date(new java.util.Date().getTime()),
+                quest,
+                user);
+        answerDAO.add(question);
+        return new Response(Response.Status.OK, "Succeed");
     }
 }
 

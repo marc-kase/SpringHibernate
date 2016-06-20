@@ -15,6 +15,17 @@ public class Question {
     private User user;
     private Date date;
 
+    public Question() {
+    }
+
+    public Question(String description, String text, Category category, User user, Date date) {
+        this.description = description;
+        this.text = text;
+        this.category = category;
+        this.user = user;
+        this.date = date;
+    }
+
     public Long getQuestionId() {
         return questionId;
     }

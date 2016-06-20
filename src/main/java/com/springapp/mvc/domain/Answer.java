@@ -12,6 +12,16 @@ public class Answer {
     private Question question;
     private User user;
 
+    public Answer() {
+    }
+
+    public Answer(String information, Date date, Question question, User user) {
+        this.information = information;
+        this.date = date;
+        this.question = question;
+        this.user = user;
+    }
+
     public Long getAnswerId() {
         return answerId;
     }

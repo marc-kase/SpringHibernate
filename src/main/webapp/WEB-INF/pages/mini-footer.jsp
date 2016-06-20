@@ -3,7 +3,7 @@
 
 <mini-footer>
     <div class="row">
-        <div class="col-sm-6">categories: ${param.categoryName}</div>
+        <div class="col-sm-6">category: ${param.categoryName}</div>
         <div class="col-sm-6 text-right">
             Publish date: ${param.date}
             <a href="profile?id=${param.userId}">${param.userName}</a>

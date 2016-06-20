@@ -2,6 +2,7 @@ package com.springapp.mvc.dao;
 
 import com.springapp.mvc.domain.Question;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,15 @@ import java.util.List;
 public class QuestionDaoImpl implements QuestionDAO {
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
+
+    @Override
+    public void add(Question question) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(question);
+        session.getTransaction().commit();
+        session.close();
+    }
 
     @Override
     @Transactional

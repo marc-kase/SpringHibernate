@@ -28,4 +28,9 @@ public class CategoryDaoImpl implements CategoryDAO {
 
         return list;
     }
+
+    @Override
+    public Category get(Long id) {
+        return (Category) sessionFactory.openSession().get(Category.class, id);
+    }
 }

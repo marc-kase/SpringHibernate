@@ -7,8 +7,12 @@
 	http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/admin**" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/add-user-form" access="hasRole('ROLE_ADMIN')"/>
+        <!--<intercept-url pattern="/add-user" access="hasRole('ROLE_ADMIN')"/>-->
+        <intercept-url pattern="/edit-user" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/add-question" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/add-question-form" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/add-answer" access="hasRole('ROLE_USER')"/>
         <logout logout-success-url="/"/>
     </http>
 
