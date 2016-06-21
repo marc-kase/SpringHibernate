@@ -63,10 +63,21 @@ public class StuffController {
 
     @RequestMapping(value = "profile", method = RequestMethod.GET)
     public String showProfile(ModelMap model, @RequestParam(value = "id") Long id) throws SQLException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null) return REDIRECT_LOGIN;
+        String name = auth.getName();
+
         User u = userDAO.get(id);
-        model.addAttribute("user", u);
-        model.addAttribute("heading", HEADING);
-        return "profile";
+        if (u.getUsername().equals(name)) {
+            model.addAttribute("user", u);
+            model.addAttribute("heading", HEADING);
+            return "edit-user";
+        } else {
+            model.addAttribute("user", u);
+            model.addAttribute("heading", HEADING);
+            return "profile";
+        }
     }
 
     @RequestMapping(value = {"all-users"}, method = RequestMethod.GET)

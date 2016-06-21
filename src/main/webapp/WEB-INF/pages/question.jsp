@@ -58,16 +58,23 @@
                     </div>
                 </c:forEach>
 
-                <sec:authorize access="isAuthenticated()">
+                <c:if test="${loggedIn}" >
                     <div class="well">
                         <input type="hidden" id="questionId" value="${quest.questionId}">
                         <h4>Your answer</h4>
                         <textarea id="text" class="form-control" style="min-width: 100%"></textarea>
                         <br>
-                        <button type="button" class="btn pull-right" onclick="submit()">Post</button>
+                        <button type="button" class="btn btn-primary" onclick="submit()">post</button>
+                        <button class="btn btn-default" onclick="window.history.back()">back</button>
                         <br>
                     </div>
-                </sec:authorize>
+                </c:if>
+
+                <c:if test="${not loggedIn}" >
+                    <div>
+                        <button class="btn btn-primary" onclick="window.history.back()">back</button>
+                    </div>
+                </c:if>
             </div>
 
         </div>

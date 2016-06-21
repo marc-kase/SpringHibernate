@@ -25,70 +25,77 @@
 
     <h3>create a question</h3>
 
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="row" style="padding: 1em">
+                <div class="col-xs-6">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="ctg-select" class="col-xs-2">category:</label>
+                            <div class="col-xs-10">
+                                <select id="ctg-select">
+                                    <c:forEach items="${catgs}" var="ctg">
+                                        <option value="${ctg.categoryId}">${ctg.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="col-xs-2">title:</label>
+                            <div class="col-xs-10">
+                                <textarea style="resize: none" cols="100" rows="1" id="title"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="text" class="col-xs-2">what it's all about:</label>
+                            <div class="col-xs-10">
+                                <textarea style="resize: none" cols="100" rows="10" id="text"></textarea>
+                            </div>
+                        </div>
 
-    <div class="table-container">
-        <table class="table">
-            <tbody>
-            <tr>
-                <td><label>category:</label></td>
-                <td>
-                    <select id="ctg-select">
-                        <c:forEach items="${catgs}" var="ctg">
-                            <option value="${ctg.categoryId}">${ctg.name}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label>title:</label></td>
-                <td><textarea style="resize: none" cols="100" rows="1" id="title"></textarea></td>
-            </tr>
-            <tr>
-                <td><label>what it's all about:</label></td>
-                <td><textarea style="resize: none" cols="100" rows="10" id="text"></textarea></td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div>
-            <button type="button" class="pull-right" onclick="submit()">Post your question</button>
+                        <div class="col-xs-10 col-xs-offset-2">
+                            <button type="button" class="btn btn-primary" onclick="submit()">Post your question</button>
+                            <button id="back" class="btn btn-default" onclick="window.history.back()">back</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <script>
-            $(function () {
-                var token = $("meta[name='_csrf']").attr("content");
-                var header = $("meta[name='_csrf_header']").attr("content");
-                $(document).ajaxSend(function (e, xhr, options) {
-                    xhr.setRequestHeader(header, token);
-                });
-            });
-
-            function submit() {
-                var select = document.getElementById("ctg-select");
-                ;
-                var question = {
-                    description: document.getElementById("title").value,
-                    text: document.getElementById("text").value,
-                    categoryId: select.options[select.selectedIndex].value
-                };
-
-                $.ajax({
-                    url: 'add-question',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: JSON.stringify(question),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        alert(data.status + ": " + data.message);
-                        location.reload();
-                    }, error: function (data) {
-                        alert(data.status + ": " + data.message);
-                    }
-                });
-            }
-        </script>
-
     </div>
 </div>
+
+<script>
+    $(function () {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+    });
+
+    function submit() {
+        var select = document.getElementById("ctg-select");
+        ;
+        var question = {
+            description: document.getElementById("title").value,
+            text: document.getElementById("text").value,
+            categoryId: select.options[select.selectedIndex].value
+        };
+
+        $.ajax({
+            url: 'add-question',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(question),
+            contentType: 'application/json',
+            success: function (data) {
+                alert(data.status + ": " + data.message);
+                location.reload();
+            }, error: function (data) {
+                alert(data.status + ": " + data.message);
+            }
+        });
+    }
+</script>
 </body>
 </html>

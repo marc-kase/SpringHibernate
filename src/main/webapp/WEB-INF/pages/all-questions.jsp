@@ -38,7 +38,7 @@
                 </c:import>
             </div>
 
-            <div class="row">
+            <div class="row" style="padding: 1em">
                 <div class="col-sm-6">
                     <ul style="white-space:nowrap;">
                         <li>categories:</li>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-sm-6">
                     <form action="add-question-form" method="get" style="margin-right: 16px" class="pull-right">
-                        <input type="submit" value="ask question"/>
+                        <input class="btn btn-primary" type="submit" value="ask question"/>
                     </form>
                 </div>
             </div>

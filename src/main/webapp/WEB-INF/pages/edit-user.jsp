@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -27,21 +26,15 @@
                 <div class="col-xs-6">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <div class="col-xs-10">
-                                <img src="http://vignette4.wikia.nocookie.net/fantendo/images/5/5f/NSMBS_Mario.png/revision/latest?cb=20121026203449">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="username" class="col-xs-2">username:</label>
                             <div class="col-xs-10">
-                                <input type="text" class="form-control" id="username" value="${user.username}"
-                                       readonly/>
+                                <input type="text" class="form-control" id="username" value="${user.username}"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-xs-2">email:</label>
                             <div class="col-xs-10">
-                                <input type="text" class="form-control" id="email" value="${user.email}" readonly/>
+                                <input type="text" class="form-control" id="email" value="${user.email}"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -52,7 +45,8 @@
                         </div>
 
                         <div class="col-xs-10 col-xs-offset-2">
-                            <button id="submit" class="btn btn-primary" onclick="window.history.back()">back</button>
+                            <button id="submit" class="btn btn-primary" onclick="submitProfile()">save</button>
+                            <button id="back" class="btn btn-default" onclick="window.history.back()">back</button>
                         </div>
                     </form>
                 </div>
@@ -60,3 +54,31 @@
         </div>
     </div>
 </div>
+
+<input id="userId" type="hidden" value="${user.userId}">
+
+<script>
+    function submitProfile() {
+        var user = {
+            userId: document.getElementById("userId").value,
+            username: document.getElementById("username").value,
+            email: document.getElementById("email").value,
+            role: document.getElementById("role").value
+        };
+
+        $.ajax({
+            url: 'edit-profile',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(user),
+            contentType: 'application/json',
+            success: function (data) {
+                alert(data.status + ": " + data.message);
+            }, error: function () {
+                alert("error");
+            }
+        });
+    }
+</script>
+</body>
+</html>
