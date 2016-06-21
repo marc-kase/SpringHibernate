@@ -1377,7 +1377,7 @@
         <data-type>varchar(128)</data-type>
       </column>
       <column id="41" parent="7" name="PIC">
-        <data-type>longblob</data-type>
+        <data-type>blob</data-type>
       </column>
       <column id="42" parent="7" name="EMAIL">
         <data-type>varchar(128)</data-type>

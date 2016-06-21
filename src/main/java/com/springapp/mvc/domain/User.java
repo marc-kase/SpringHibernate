@@ -7,7 +7,7 @@ public class User {
     private String username;
     private String email;
     private Role role;
-    private Byte[] pic;
+    private String pic;
     private Set<Question> questions;
     private Set<Answer> answers;
 
@@ -52,11 +52,11 @@ public class User {
         this.userId = userId;
     }
 
-    public Byte[] getPic() {
+    public String getPic() {
         return pic;
     }
 
-    public void setPic(Byte[] pic) {
+    public void setPic(String pic) {
         this.pic = pic;
     }
 

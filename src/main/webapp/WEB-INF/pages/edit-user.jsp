@@ -6,6 +6,9 @@
 <head>
     <title></title>
 
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -29,8 +32,7 @@
                         <div class="form-group">
                             <div class="col-xs-10">
                                 <div id="preview">
-                                    <img id="image"
-                                         src="http://vignette4.wikia.nocookie.net/fantendo/images/5/5f/NSMBS_Mario.png/revision/latest?cb=20121026203449">
+                                    <img id="image" src="${user.pic}">
                                 </div>
                                 <input type="file" id="the-photo-file-field">
                             </div>
@@ -68,16 +70,25 @@
 <input id="userId" type="hidden" value="${user.userId}">
 
 <script>
+    $(function () {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+    });
+
     function submitProfile() {
         var user = {
-            userId: document.getElementById("userId").value,
+            userid: document.getElementById("userId").value,
             username: document.getElementById("username").value,
             email: document.getElementById("email").value,
-            role: document.getElementById("role").value
+            role: document.getElementById("role").value,
+            pic: document.getElementById("image").src
         };
 
         $.ajax({
-            url: 'edit-profile',
+            url: 'edit-user',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(user),
@@ -85,7 +96,7 @@
             success: function (data) {
                 alert(data.status + ": " + data.message);
             }, error: function () {
-                alert("error");
+                alert(data.status + ": " + data.message);
             }
         });
     }
@@ -99,7 +110,7 @@
             var reader = new FileReader();
             reader.onload = function(event){
                 the_url = event.target.result
-                $('#preview').html("<img src='"+the_url+"' />")
+                $('#preview').html("<img id='image' src='"+the_url+"' />")
             }
             reader.readAsDataURL(file);
         }

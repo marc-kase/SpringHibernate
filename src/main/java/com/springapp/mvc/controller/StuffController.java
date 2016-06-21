@@ -104,21 +104,21 @@ public class StuffController {
     }
 
     @RequestMapping(value = "edit-user", method = RequestMethod.POST)
-    public String editUser(@RequestBody Profile profile) throws SQLException, IOException {
+    public Response editUser(@RequestBody Profile profile) throws SQLException, IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
 
-        String redirect;
-        if (profile.hasUserid()) redirect = "redirect: profile?id=" + profile.getUserid();
-        else redirect = REDIRECT_LOGIN;
-
-        if (name.isEmpty()) return redirect;
-        if (!name.equals(profile.getUsername())) return redirect;
+        if (name.isEmpty())
+            return new Response(Response.Status.ERROR, "Name is empty");
+        if (!name.equals(profile.getUsername()))
+            return new Response(Response.Status.ERROR, "Wrong user");
 
         User u = userDAO.get(profile.getUserid());
         if (profile.hasUsername()) u.setUsername(profile.getUsername());
         if (profile.hasEmail()) u.setEmail(profile.getEmail());
-        return "redirect: profile?id=" + u.getUserId();
+        if (profile.hasPic()) u.setPic(profile.getPic());
+        userDAO.update(u);
+        return new Response(Response.Status.OK, "Saved");
     }
 
     @RequestMapping(value = {"/", "all-questions"}, method = RequestMethod.GET)

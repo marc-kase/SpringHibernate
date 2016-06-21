@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
+    @Transactional
     public void add(User user) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -51,10 +52,11 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public void Update(User user) {
+    @Transactional
+    public void update(User user) {
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.update(user);
+        session.getTransaction().begin();
+        session.merge(user);
         session.getTransaction().commit();
         session.close();
     }

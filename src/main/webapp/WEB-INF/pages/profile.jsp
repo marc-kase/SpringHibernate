@@ -28,7 +28,7 @@
                     <form class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-10">
-                                <img src="http://vignette4.wikia.nocookie.net/fantendo/images/5/5f/NSMBS_Mario.png/revision/latest?cb=20121026203449">
+                                <img id="image" src="${user.pic}">
                             </div>
                         </div>
                         <div class="form-group">

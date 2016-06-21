@@ -9,5 +9,5 @@ public interface UserDAO {
     void add(User user);
     User get(Long id);
     User get(String username);
-    void Update(User user);
+    void update(User user);
 }
