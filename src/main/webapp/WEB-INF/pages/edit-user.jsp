@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -25,6 +26,15 @@
             <div class="row" style="padding: 1em">
                 <div class="col-xs-6">
                     <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-xs-10">
+                                <div id="preview">
+                                    <img id="image"
+                                         src="http://vignette4.wikia.nocookie.net/fantendo/images/5/5f/NSMBS_Mario.png/revision/latest?cb=20121026203449">
+                                </div>
+                                <input type="file" id="the-photo-file-field">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="username" class="col-xs-2">username:</label>
                             <div class="col-xs-10">
@@ -77,6 +87,32 @@
             }, error: function () {
                 alert("error");
             }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+
+        function renderImage(file){
+            var reader = new FileReader();
+            reader.onload = function(event){
+                the_url = event.target.result
+                $('#preview').html("<img src='"+the_url+"' />")
+            }
+            reader.readAsDataURL(file);
+        }
+
+        $("#the-file-input").change(function () {
+            console.log(this.files)
+            renderImage(this.files[0])
+        });
+
+        $("#the-photo-file-field").change(function () {
+            console.log(this.files[0].size)
+            renderImage(this.files[0])
+
         });
     }
 </script>
