@@ -15,10 +15,9 @@
 </head>
 <body>
 <div class="container">
-    <sec:authorize var="loggedIn" access="isAuthenticated()"/>
     <c:import url="mini-head.jsp">
         <c:param name="title" value="${heading}"/>
-        <c:param name="loggedin" value="${loggedIn}"/>
+        <c:param name="loggedin" value="false"/>
     </c:import>
 
     <div class="row">

@@ -18,10 +18,9 @@
 </head>
 <body>
 <div class="container">
-    <sec:authorize var="loggedIn" access="isAuthenticated()"/>
     <c:import url="mini-head.jsp">
         <c:param name="title" value="${heading}"/>
-        <c:param name="loggedin" value="${loggedIn}"/>
+        <c:param name="loggedin" value="true"/>
     </c:import>
 
     <div class="row">
@@ -57,7 +56,7 @@
                         </div>
 
                         <div class="col-xs-10 col-xs-offset-2">
-                            <button id="submit" class="btn btn-primary" onclick="submitProfile()">save</button>
+                            <button id="save" class="btn btn-primary" onclick="submitProfile()">save</button>
                             <button id="back" class="btn btn-default" onclick="window.history.back()">back</button>
                         </div>
                     </form>
@@ -79,8 +78,9 @@
     });
 
     function submitProfile() {
+        var uid = document.getElementById("userId").value;
         var user = {
-            userid: document.getElementById("userId").value,
+            userid: uid,
             username: document.getElementById("username").value,
             email: document.getElementById("email").value,
             role: document.getElementById("role").value,
